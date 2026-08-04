@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const RHF = () => {
@@ -8,9 +8,10 @@ const RHF = () => {
     reset,
     formState: { errors },
   } = useForm({});
-
+  const [product, setProduct] = useState({});
   const handleForm = (data) => {
     console.log(data);
+    setProduct(data);
     reset();
   };
   return (
@@ -46,6 +47,13 @@ const RHF = () => {
 
         <button className="p-2 bg-blue-600 text-white rounded"> Create </button>
       </form>
+
+      <div>
+        <h1>{product.productName}</h1>
+        <h1>{product.price}</h1>
+        <h1>{product.catogory}</h1>
+        <h1>{product.image}</h1>
+      </div>
     </div>
   );
 };
