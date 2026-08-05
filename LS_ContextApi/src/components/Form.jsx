@@ -19,9 +19,7 @@ const Form = ({ show, setShow, setToggle }) => {
 
         <form
           onSubmit={handleSubmit((data) => {
-            setShow([...show, data]);
-
-            localStorage.setItem("show", JSON.stringify(show));
+            setShow((prev) => [...prev, data]);
             console.log(data);
             reset();
             setToggle((prev) => !prev);
