@@ -4,14 +4,20 @@ import Form from "./components/Form";
 import Card from "./components/Card";
 
 const App = () => {
-  const [user, setData] = useState([]);
+  const [user, setData] = useState(() => {
+    return JSON.parse(localStorage.getItem("users")) || [];
+  });
   const [toggle, setToggle] = useState(false);
+  const [update, setUpdate] = useState();
 
-  // Function to remove a user by index
-  const handleDelete = (indexToDelete) => {
-    setData((prev) => prev.filter((_, index) => index !== indexToDelete));
+  const deleteUser = (id) => {
+    let filterUser = user.filter((val, index) => {
+      return index != id;
+    });
+    console.log(filterUser);
+    setData(filterUser);
+    localStorage.setItem("users", JSON.stringify(filterUser));
   };
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 antialiased pt-24 pb-12 px-4">
       <Navbar toggle={toggle} setToggle={setToggle} />
@@ -22,10 +28,12 @@ const App = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {user.map((elem, index) => (
                 <Card
+                  setUpdate={setUpdate}
+                  setToggle={setToggle}
+                  deleteUser={deleteUser}
                   user={elem}
                   key={index}
                   index={index}
-                  onDelete={handleDelete}
                 />
               ))}
             </div>
@@ -41,7 +49,13 @@ const App = () => {
             </div>
           )
         ) : (
-          <Form setData={setData} user={user} setToggle={setToggle} />
+          <Form
+            setData={setData}
+            user={user}
+            setToggle={setToggle}
+            setUpdate={setUpdate}
+            update={update}
+          />
         )}
       </main>
     </div>
