@@ -1,39 +1,35 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-const Form = ({ show, setShow, setToggle }) => {
+const Form = ({ user, setData, setToggle }) => {
   let {
     register,
-    formState: { errors },
     handleSubmit,
+    formState: { errors },
     reset,
   } = useForm({
     mode: "onChange",
   });
 
+  let formSubmit = (data) => {
+    setData([...user, data]);
+    console.log(data);
+    setToggle((prev) => !prev);
+    reset();
+  };
   return (
-    <div className="flex justify-center items-center min-h-[80vh]">
-      <div className="w-full max-w-md shadow-xl rounded-2xl p-8">
+    <div className="flex justify-center items-center min-h-[80vh] bg-slate-100">
+      <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
         <h1 className="text-3xl font-bold text-center text-indigo-600 mb-6">
           Create User
         </h1>
 
-        <form
-          onSubmit={handleSubmit((data) => {
-            setShow([...show, data]);
-
-            localStorage.setItem("show", JSON.stringify(show));
-            console.log(data);
-            reset();
-            setToggle((prev) => !prev);
-          })}
-          className="space-y-5"
-        >
+        <form onSubmit={handleSubmit(formSubmit)} className="space-y-5">
           <input
             {...register("name", {
-              required: "Name is Required",
+              required: "Name",
               pattern: {
                 value: /^[A-Za-z]+(?: [A-Za-z]+)*$/,
-                message: "Black Spaces are not allowed",
+                message: "BackSpaces Are Not Allowed",
               },
             })}
             type="text"
@@ -45,10 +41,10 @@ const Form = ({ show, setShow, setToggle }) => {
           )}
           <input
             {...register("email", {
-              required: "email is Required",
+              required: "Email Is Required",
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Enter Valid Email",
+                message: "Enter A Valid Email",
               },
             })}
             type="email"
