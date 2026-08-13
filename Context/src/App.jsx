@@ -3,6 +3,8 @@ import ProductCard from "./components/ProductCard";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import { useState } from "react";
+import { MyShop } from "./context/MyWebsite";
+import { useContext } from "react";
 const App = () => {
   let products = [
     {
@@ -276,26 +278,18 @@ const App = () => {
       },
     },
   ];
-
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  let { isCartOpen } = useContext(MyShop);
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col antialiased">
-      <Navbar setIsCartOpen={setIsCartOpen} />
+      <Navbar />
       {isCartOpen ? (
         <div>
-          <Cart cartItems={cartItems} />
+          <Cart />
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map((val, id) => {
-            return (
-              <ProductCard
-                key={id}
-                setCartItems={setCartItems}
-                products={val}
-              />
-            );
+            return <ProductCard key={id} products={val} />;
           })}
         </div>
       )}

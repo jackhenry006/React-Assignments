@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MyShop } from "../context/MyWebsite";
 
-const Navbar = ({ setIsCartOpen }) => {
+const Navbar = () => {
+  let { setIsCartOpen } = useContext(MyShop);
   return (
     <nav className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/60 shadow-lg">
       {/* Logo */}

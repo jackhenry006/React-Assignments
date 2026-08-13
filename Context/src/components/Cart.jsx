@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
+import { MyShop } from "../context/MyWebsite";
 
-const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem }) => {
+const Cart = ({ onUpdateQuantity, onRemoveItem }) => {
+  let { cartItems } = useContext(MyShop);
   // Calculate totals
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * (item.quantity || 1),
@@ -101,7 +103,7 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem }) => {
 
                   {/* Total & Remove */}
                   <div className="flex items-center gap-4">
-                    <span className="text-base font-bold text-white min-w-[70px] text-right">
+                    <span className="text-base font-bold text-white text-right">
                       ${(item.price * quantity).toFixed(2)}
                     </span>
                     <button

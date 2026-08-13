@@ -1,7 +1,9 @@
 import React from "react";
 import { Star } from "lucide-react"; // Optional: npm install lucide-react
-
-const ProductCard = ({ products, setCartItems }) => {
+import { MyShop } from "../context/MyWebsite";
+import { useContext } from "react";
+const ProductCard = ({ products }) => {
+  let { setCartItems } = useContext(MyShop);
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-zinc-900 border border-zinc-800 transition-all duration-300 hover:border-orange-500/50 hover:shadow-[0_0_20px_rgba(249,115,22,0.15)]">
       {/* Image Container */}
