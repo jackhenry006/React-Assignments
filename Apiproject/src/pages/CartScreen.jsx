@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import CartProductCard from "../components/CartProductCard";
+import { MyStore } from "../context/MyContext";
 
-const CartScreen = ({ cartItems }) => {
+const CartScreen = () => {
+  let { cartItems } = useContext(MyStore);
   return (
     <div className="text-6xl  h-screen">
       {cartItems.map((elem) => {
