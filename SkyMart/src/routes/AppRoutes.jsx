@@ -1,36 +1,66 @@
 import React from "react";
-import { RouterProvider } from "react-router/dom";
+import { createBrowserRouter, RouterProvider } from "react-router";
+
 import AuthLayouts from "../layouts/AuthLayouts";
-import { createBrowserRouter } from "react-router";
+import MainLayouts from "../layouts/MainLayouts";
+
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
-import MainLayouts from "../layouts/MainLayouts";
+import HomePage from "../pages/HomePage";
+import UserPage from "../pages/UserPage";
+import ProductPage from "../pages/ProductPage";
+
+import ProtectedRoutes from "./ProtectedRoutes";
+import PublicRoute from "./PublicRoute";
+
 const AppRoutes = () => {
-  let router = createBrowserRouter([
+  const router = createBrowserRouter([
     {
       path: "/",
-      element: <AuthLayouts />,
+      element: <PublicRoute />,
       children: [
         {
-          index: true,
-          element: <LoginPage />,
-        },
-
-        {
-          path: "login",
-          element: <LoginPage />,
-        },
-        {
-          path: "register",
-          element: <RegisterPage />,
+          element: <AuthLayouts />,
+          children: [
+            {
+              index: true,
+              element: <LoginPage />,
+            },
+            {
+              path: "login",
+              element: <LoginPage />,
+            },
+            {
+              path: "register",
+              element: <RegisterPage />,
+            },
+          ],
         },
       ],
     },
 
     {
       path: "/main",
-      element: <MainLayouts />,
-      children: [{}],
+      element: <ProtectedRoutes />,
+      children: [
+        {
+          element: <MainLayouts />,
+          children: [
+            {
+              index: true,
+              element: <HomePage />,
+            },
+            {
+              path: "users",
+              element: <UserPage />,
+            },
+            {
+              path: "products",
+              element: <ProductPage />,
+            },
+          ],
+        },
+      ],
     },
   ]);
 
